@@ -1,5 +1,5 @@
 //
-// Created by Hong Yang on 2024-05-02.
+// Created by TheUnicat on 2024-05-02.
 //
 
 #ifndef COIN_GAMES_H
