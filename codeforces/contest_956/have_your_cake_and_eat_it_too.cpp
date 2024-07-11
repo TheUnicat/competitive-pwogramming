@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 using namespace std;
+typedef long long ll;
 
 int n;
 
@@ -13,10 +14,10 @@ int main() {
     cin >> n;
     for (int i = 0; i < n; i++) {
         int size;
-        int total_reward = 0;
-        int min_reward;
+        ll total_reward = 0;
+        ll min_reward;
         cin >> size;
-        int values [3][size];
+        vector<vector<int> > values(3, vector<int>(size));
         for (int j = 0; j < size; j++) {
             cin >> values[0][j];
             total_reward += values[0][j];
@@ -47,7 +48,7 @@ int main() {
                 if (current_index == size) break;
                 int start_index = current_index;
                 int person = one_two_three[m];
-                int current_reward = 0;
+                ll current_reward = 0;
                 while (true) {
                     current_reward += values[person][current_index];
                     if (current_reward >= min_reward) {
