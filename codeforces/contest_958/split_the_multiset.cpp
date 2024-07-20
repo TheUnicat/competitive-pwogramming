@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <vector>
+#include <cmath>
 using namespace std;
 
 int n;
@@ -13,11 +13,8 @@ int main() {
     for (int i = 0; i < n; i++) {
         int n, k;
         cin >> n >> k;
-        int steps = 0;
-        while (n > 1) {
-            if (n > k) n -= k - 1; else n-= k;
-            steps++;
-        }
+        int steps = ceil((float) (n - k) / float() (k - 1));
+        if (n - steps * (k - 1) > 1) steps++;
         cout << steps << endl;
     }
 }
