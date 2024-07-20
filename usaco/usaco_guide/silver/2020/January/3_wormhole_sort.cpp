@@ -66,14 +66,22 @@ int main() {
     infile.close();
     sort(wormholes.begin(), wormholes.end(), sort_wormholes);
 
-    int min_width = wormholes[0].second;
+    int min_width;
     //cout << "initial width" << min_width << endl;
-    for (int i = 1; i < m; i++) {
-        if (test_case(cows, wormhole_graph, wormholes[i].second)) {
-            min_width = wormholes[i].second;
+    int left = 0;
+    int right = m - 1;
+
+    while (right >= left) {
+        int mid = left + (right - left) / 2;
+        if (test_case(cows, wormhole_graph, wormholes[mid].second)) {
+            min_width = wormholes[mid].second;
+            left = mid + 1;
         }
-        else break;
+        else {
+            right = mid - 1;
+        }
     }
+
     bool already_sorted = true;
     for (int i = 0; i < n; i++) {
         if (cows[i] - 1 != i) {
@@ -81,6 +89,7 @@ int main() {
             break;
         }
     }
+
     if (already_sorted) min_width = -1;
     ofstream outfile("wormsort.out");
     outfile << min_width;
