@@ -15,6 +15,7 @@ int n_waypoints = 0;
 int m, n;
 
 void floodfill(int x, int y, int max_diff, int prev_val) {
+    if (waypoints_reached == n_waypoints) return;
     if (x == -1 || x == m || y == -1 || y == n) return;
     if (visited[x][y]) return;
     int value = course[x][y];
