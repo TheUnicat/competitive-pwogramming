@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <set>
 using namespace std;
 
 int t;
@@ -15,15 +14,15 @@ int main() {
     for (int i = 0; i < t; i++) {
         int l, q;
         cin >> l >> q;
-        vector<map<char, int> > string_one(l + 1);
-        vector<map<char, int> > string_two(l + 1);
+        vector<vector<int> > string_one(l + 1, vector<int>(26, 0));
+        vector<vector<int> > string_two(l + 1, vector<int>(26, 0));
         string one, two;
         cin >> one >> two;
         for (int j = 1; j <= l; j++) {
             string_one[j] = string_one[j - 1];
-            string_one[j][one[j - 1]]++;
+            string_one[j][one[j - 1] - 'a']++;
             string_two[j] = string_two[j - 1];
-            string_two[j][two[j - 1]]++;
+            string_two[j][two[j - 1] - 'a']++;
         }
 
         for (int j = 0; j < q; j++) {
@@ -34,31 +33,18 @@ int main() {
             auto map_one_left = string_one[left - 1];
             auto map_two_right = string_two[right];
             auto map_two_left = string_two[left - 1];
-            map<char, int> string_one_sums;
-            map<char, int> string_two_sums;
-            for (const auto& pair : map_one_right) {
-                char key = pair.first;
-                string_one_sums[key] = abs(map_one_right[key] - map_one_left[key]);
+            vector<int> string_one_sums(26, 0);
+            vector<int> string_two_sums(26, 0);
+            for (int k = 0; k < 26; k++) {
+                string_one_sums[k] = abs(map_one_right[k] - map_one_left[k]);
             }
-            for (const auto& pair : map_two_right) {
-                char key = pair.first;
-                string_two_sums[key] = abs(map_two_right[key] - map_two_left[key]);
+            for (int k = 0; k < 26; k++) {
+                string_two_sums[k] = abs(map_two_right[k] - map_two_left[k]);
             }
 
-            set<char> alphabet;
 
-            for (const auto& pair : string_one_sums) {
-                char key = pair.first;
-                alphabet.insert(key);
-            }
-
-            for (const auto& pair : string_two_sums) {
-                char key = pair.first;
-                alphabet.insert(key);
-            }
-
-            for (const auto& character : alphabet) {
-                diffs += abs(string_one_sums[character] - string_two_sums[character]);
+            for (int k = 0; k < 26; k++) {
+                diffs += abs(string_one_sums[k] - string_two_sums[k]);
             }
 
             cout << diffs / 2 << endl;
