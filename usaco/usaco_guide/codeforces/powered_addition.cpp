@@ -14,30 +14,25 @@ int main() {
 
     for (int i = 0; i < t; i++) {
         int n;
-        int seconds = 0;
+        int biggest_diff = 0;
         cin >> n;
         vector<int> test(n);
         for (int j = 0; j < n; j++) cin >> test[j];
 
-        if (n == 1) {
-            cout << 0 << endl;
-            continue;
+        int biggest = -1100000000;
+
+        for (int j = 0; j < n; j++) {
+            if (test[j] > biggest) {
+                biggest = test[j];
+                continue;
+            }
+
+            int diff = biggest - test[j];
+            if (diff > biggest_diff) biggest_diff = diff;
         }
 
-        int left = 1;
-        while (test[left] >= test[left - 1]) {
-                left++;
-        }
-        int min_value = test[left - 1];
-        int max_diff = 0;
 
-        for (int j = left; j < n; j++) {
-            if (min_value - test[j] > max_diff) max_diff = min_value - test[j];
-        }
-
-        int num = 0;
-        seconds = max_diff > 0 ? (int) log2(max_diff) + 1 : 0;
-
-        cout << seconds << endl;
+        if (biggest_diff != 0) cout << ((int) log2(biggest_diff) + 1) << endl;
+        else cout << 0 << endl;
     }
 }
