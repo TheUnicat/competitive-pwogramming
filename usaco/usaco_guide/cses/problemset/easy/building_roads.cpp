@@ -4,12 +4,11 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 int n, m;
 
-vector<bool> searched;
+vector<bool> searched = {true};
 
 void tree_segments(int start_node, const vector<vector<int> > &road_graph) {
     if (searched[start_node]) return;
