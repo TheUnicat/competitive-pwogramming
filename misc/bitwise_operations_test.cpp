@@ -8,7 +8,7 @@ using namespace std;
 int a, b;
 
 int add(int one, int two) {
-    while (two > 0) {
+    while (two > 0)
         int carry = one & two;
         one ^= two;
         two = carry << 1;

@@ -92,3 +92,5 @@ int main() {
 
 
 //NKKKKI
+//I N K
+//0 0 0
