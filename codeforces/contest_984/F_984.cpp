@@ -9,22 +9,42 @@ using ll = long long;
 
 int t;
 
+ll xor_prefix(ll n) {
+    if (n % 4 == 0) {
+        return n;
+    }
+    if (n % 4 == 1) {
+        return 1;
+    }
+    if (n % 4 == 2) {
+        return n + 1;
+    }
+
+    return 0;
+}
+
+ll xor_range(ll n, ll m) {
+    return xor_prefix(n - 1) ^ xor_prefix(m);
+}
+
+ll two_exp(ll num) {
+    return 1 << num;
+}
+
 int main() {
     cin >> t;
     for (int j = 0; j < t; j++) {
         ll l, r, i, k;
-        ll xor_sum = 0;
         cin >> l >> r >> i >> k;
-        for (int m = 0; m < 62; m++) {
-            ll mod_val = 1 << i;
-            ll val = 1 << m;
-            ll new_right = r - (r % mod_val);
-            if (r & mod_val) new_right = r;
-            ll new_left = l + mod_val - (l % mod_val);
-            if (l & mod_val) new_left = l;
+        ll curr_xor = xor_range(l, r);
+        ll min_h = (l - k) / two_exp(i);
+        if (k + min_h * two_exp(i) < l) min_h++;
+        ll max_h  = (r - k) / two_exp(i);
+        bool works = (((k + min_h * two_exp(i)) <= r && (k + min_h * two_exp(i)) >= l)) || (((k + max_h * two_exp(i)) <= r && (k + max_h * two_exp(i)) >= l));
+        ll h_xor = xor_range(min_h, max_h);
+        h_xor <<= i;
+        if ((max_h - min_h) % 2 == 0 && works) h_xor ^= k;
 
-            ll original_count = (new_right - new_left) / val + 1;
-
-        }
+        cout << (h_xor ^ curr_xor) << endl;
     }
 }
