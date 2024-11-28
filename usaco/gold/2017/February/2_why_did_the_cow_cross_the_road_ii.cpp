@@ -31,20 +31,27 @@ int main() {
     for (int i = 0; i < n; i++) {
         for (int j = i - 4; j <= i + 4; j++) {
             if (j < 0 || j >= n) continue;
-            edges.emplace(left_line[i].second, right_line[j].second);
+            edges.emplace(left_line[i].second + 1, right_line[j].second + 1);
         }
     }
 
     vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            dp[i][j] = max(dp[i - 1][j], dp[i][j]);
-            dp[i][j] = max(dp[i][j - 1], dp[i][j]);
+            if (dp[i - 1][j] > dp[i][j - 1]) {
+                dp[i][j] = dp[i - 1][j];
+            }
+            else {
+                dp[i][j] = dp[i][j - 1];
+            }
+
             if (edges.find(make_pair(i, j)) != edges.end()) {
-                dp[i][j] = max(dp[i - 1][j - 1] + 1, dp[i][j]);
+                if (dp[i - 1][j - 1] + 1 > dp[i][j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }
             }
         }
     }
 
-    cout << dp[n][n] + 1 << endl;
+    cout << dp[n][n] << endl;
 }
